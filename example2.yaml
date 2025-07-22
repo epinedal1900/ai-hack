@@ -1,0 +1,54 @@
+version: 2
+meta:
+  userId: "u_99"
+  year: 2024
+  locale: "en-US"
+store:
+  totals:
+    spend: 18765.2
+    currency: "USD"
+  topCats:
+    - { name: "Food & Drink", amount: 3450 }
+    - { name: "Travel", amount: 2200 }
+bindings:
+  CUR: "{{$.store.totals.currency}}"
+
+graph:
+  - id: intro
+    kind: title
+    props:
+      headline: "Your {{$.meta.year}} Banking Wrapped"
+      sub: "Let's dive in, {{$.meta.userId}}"
+    timeline: { duration: 3 }
+    traits: ["vector"]
+
+  - id: spend-reveal
+    kind: metric_reveal
+    props:
+      value: "{{$.store.totals.spend}}"
+      suffix: "{{CUR}}"
+      style: "countUp"
+    timeline: { duration: "auto" }
+    rules:
+      - if: "$.store.totals.spend > 20000"
+        then:
+          props:
+            badge: "Big Spender!"
+            badgeStyle: "flash"
+
+  - id: top-cats
+    kind: chart
+    props:
+      chartType: "donut"
+      labels: "{{$.store.topCats[*].name}}"
+      values: "{{$.store.topCats[*].amount}}"
+    traits: ["vector","audio"]
+    timeline: { start: "auto", duration: 6 }
+
+  - id: outro
+    kind: outro
+    props:
+      ctaLabel: "Share"
+      ctaAction: "shareUrl"
+      shareUrl: "https://bank.app/wrapped/{{$.meta.userId}}/{{$.meta.year}}"
+    timeline: { duration: 4 }
