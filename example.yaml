@@ -1,0 +1,24 @@
+version: 1
+meta:
+  userName: "Alex"
+  year: 2024
+scenes:
+  - id: intro
+    type: title
+    text: "Alex, here's your 2024 Banking Wrapped"
+    duration: 3
+  - id: spend
+    type: stat
+    text: "You spent"
+    value: "{{totalSpend}} {{currency}}"
+  - id: cats
+    type: list
+    text: "Top Categories"
+    items: "{{topCategories[0:5]}}"   # resolve at render time
+  - id: biggest
+    type: stat
+    text: "Biggest Purchase: {{biggestPurchase.merchant}}"
+    value: "{{biggestPurchase.amount}} {{currency}} on {{biggestPurchase.date}}"
+  - id: outro
+    type: title
+    text: "Share it & set goals for {{year + 1}}!"
